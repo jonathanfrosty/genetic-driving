@@ -6,7 +6,7 @@ Each population of driving agents is subject to evolution in order to produce th
 This process of evolution repeats through many generations of populations, each time producing better and better driving agents that can navigate further around the course. Below is a brief depiction of this learning process at work, with a population size of 500 agents:
 
 # Initial Population
-Initially, the population of driving agents all have random vectors in their movesets, and so randomly move through the course until inevitably crashing. Those agents that happen to pass through the most checkpoints are most likely picked for evolution purposes, in the hopes that more agents in the next popoulation will have similar-enough attributes to follow similar paths.
+Initially, the population of driving agents all have random vectors in their movesets, and so randomly move through the course until inevitably crashing. Those agents that happen to pass through the most checkpoints are most likely picked for evolution purposes, in the hopes that more agents in the next population will have similar-enough attributes to follow similar paths.
 
 ![alt text](./resources/initial_population.PNG)
 
