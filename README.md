@@ -17,6 +17,6 @@ A few generations in, we can see that a significant portion of the agents have l
 
 # Significant Learning
 
-Once this process has repeated across many generations, we can see significant learning taking place where driving agents take largely similar paths. These similarities usually last until the later stages of their lifespans, where genetic mutation changes the course of many agents, allowing for the development outlined in the previous section to occur.
+Once this process has repeated across many generations, we can see significant learning taking place where driving agents take largely similar paths. These similarities usually last until the later stages of their lifespans, where genetic mutation can change the course of agents, allowing for the development outlined in the previous section to occur. The more generations simulated, the more refined the population's behaviour becomes, and the more likely the agents are to travel further around the track (in theory).
 
 ![alt text](./resources/significant_learning.PNG)
