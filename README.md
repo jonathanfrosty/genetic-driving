@@ -23,7 +23,7 @@ Once this process has repeated across many generations, we can see significant l
 
 # Statistics
 
-#### Furthest Allowed Evolution:
+#### Furthest Recorded Evolution:
 - Most Laps: 28
 - Life Lived (animation frames): ~8350
 - Time Taken: ~2 minutes 20 seconds (assuming 60fps)
