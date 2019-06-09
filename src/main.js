@@ -134,9 +134,7 @@ function rouletteWheelSelection(population) {
     let randomValue = random();
     let cumulativeFitnessProportion = 0;
 
-    let clonedArray = _.clone(cars)
-
-    let chosenCar = clonedArray[Math.round(Math.random() * (clonedArray.length - 1))];
+    let chosenCar = cars[Math.round(Math.random() * (cars.length - 1))];
 
     for (let car of cars) {
         let fitnessProportion = car.getFitness() / population.getOverallFitness();
@@ -152,10 +150,9 @@ function rouletteWheelSelection(population) {
 }
 
 function getBestCar(cars) {
-    let clonedArray = _.clone(cars)
-    let bestCar = clonedArray[0];
+    let bestCar = cars[0];
 
-    for(let car of clonedArray) {
+    for(let car of cars) {
         if(car.getFitness() > bestCar.getFitness()) bestCar = car
     }
 
@@ -168,9 +165,10 @@ function crossover(chosen, partner) {
     if(random() > 0.5) {
         let partnerMoves = partner.moveset.moves;
         let newMoves = [];
+        let crossoverPoint = chosen.lifeLived;
 
-        for(let i = 0; i < chosenMoves.length & i < partnerMoves.length; i++) {
-            if(Math.random() > 0.7) newMoves[i] = chosenMoves[i];
+        for(let i = 0; i < lifespan; i++) {
+            if(i > crossoverPoint) newMoves[i] = chosenMoves[i];
             else newMoves[i] = partnerMoves[i];
         }
 
@@ -203,29 +201,45 @@ function crossover(chosen, partner) {
 }
 
 function mutate(car) {
-    let numberOfMutations = 20;
+    let numberOfMutations = 10;
 
     let newCar;
-    let newMoves = [...car.moveset.moves];
+    let newMoves = car.moveset.moves;
 
-    let lifeLived = car.lifeLived;
-    let checkpointReached = car.currentCheckpointNumber + 1;
+    if(random() > 0.3) {
+        let lifeLived = car.lifeLived;
+        let checkpointReached = car.currentCheckpointNumber + 1;
 
-    let minimumIndex = lifeLived - 2 * floor(track.checkpoints.length / checkpointReached);
+        let sigmoidal = this.calculateSigmoidalValue(checkpointReached);
+        let value = floor(map(sigmoidal, 0, 1, lifeLived, numberOfMutations));
+        let minimumIndex = lifeLived - value;
     
-    if(minimumIndex > lifeLived - numberOfMutations) minimumIndex = lifeLived - numberOfMutations;
-    if(minimumIndex < 0) minimumIndex = 0;
-
-    if(random() > 0.4) {
         for(let i = 0; i < numberOfMutations; i++) {
             let randomIndex = minimumIndex + floor(random(lifeLived - minimumIndex));
-            newMoves[randomIndex] = p5.Vector.mult(newMoves[randomIndex], (random() > 0.5) ? -1.4 : 1.4);
-        }
+            newMoves[randomIndex] = p5.Vector.random2D().mult(random() > 0.5 ? 2 : -2);
+        }        
         newCar = new Car(newMoves, car.maxSpeed, car.maxForce);
+    } else {
+        if(random() > 0.5) {
+            let randomFactor = random() * 0.02 + 1;
+            newCar = new Car(newMoves, car.maxSpeed * randomFactor, car.maxForce * randomFactor);
+        } else {
+            let randomFactor = 1 - random() * 0.02;
+            newCar = new Car(newMoves, car.maxSpeed, car.maxForce * randomFactor);
+        }        
     }
 
-    newCar = new Car(newMoves, car.maxSpeed, random() > 0.5 ? car.maxForce * 0.99 : car.maxForce * 1.01);
     newCar.lifeLived = car.lifeLived;
 
     return newCar;
+}
+
+function calculateSigmoidalValue(x) {
+    let threshold = 1;
+    let gain = 2;
+
+    let difference = gain * max(x - threshold, 0);
+    let sigmoidal = difference / (difference + 1);
+
+    return sigmoidal;
 }
