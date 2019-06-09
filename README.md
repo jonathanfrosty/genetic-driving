@@ -20,3 +20,13 @@ A few generations in, we can see that a significant portion of the agents have l
 Once this process has repeated across many generations, we can see significant learning taking place where driving agents take largely similar paths. These similarities usually last until the later stages of their lifespans, where genetic mutation can change the course of agents, allowing for the development outlined in the previous section to occur. The more generations simulated, the more refined the population's behaviour becomes, and the more likely the agents are to travel further around the track (in theory).
 
 ![alt text](./resources/significant_learning.PNG)
+
+# Statistics
+
+#### Furthest Allowed Evolution:
+- Most Laps: 28
+- Life Lived (animation frames): ~8350
+- Time Taken: ~2 minutes 20 seconds (assuming 60fps)
+- Generations Required: 825
+
+This data implies an average evolutionary progression rate of about 1 additional complete lap per ~30 generations, given the track size shown in the images above and three checkpoints per track edge. Rates will differ depending on the track size, and also the frequency of checkpoint placement, determined by a "checkpointsPerEdge" variable. There is a trade-off for this value - too low and cars will struggle to make it from one checkpoint to the next, thus slowing progression; but too high and smaller increases in distance travelled are rewarded, also slowing progression.
